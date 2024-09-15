@@ -8,8 +8,3 @@ services:
       - .:/app
     env_file:
       - .env
-    environment:
-      - FLASK_ENV=development
-      - BASIC_AUTH_USERNAME=admin
-      - BASIC_AUTH_PASSWORD=password
-      - SECRET_KEY=supersecretkey  # Variabile d'ambiente per la chiave segreta

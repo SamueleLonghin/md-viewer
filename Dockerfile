@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
+RUN pip install --upgrade pip setuptools importlib-metadata
 RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --upgrade importlib-metadata==4.13.0
+
 
 COPY . .
 
