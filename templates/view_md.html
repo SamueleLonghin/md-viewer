@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content">
+    <div class="markdown-content">
+        {{ content | safe }}
+    </div>
+</div>
+
+
+<!-- Sidebar che si sovrappone al contenuto -->
+<div id="sidebar" class="p-3 collapsed">
+<!--    <button id="toggle-sidebar" class="btn btn-sm btn-secondary"><i class="bi bi-x-lg"></i></button>-->
+    <h5 class="mt-3">Sottoargomenti</h5>
+    <ul class="list-unstyled">
+        {% for sottoargomento in sottoargomenti %}
+        <li>
+            <a href="{{ url_for('view_md', argomento=argomento.folder, sottoargomento=sottoargomento.folder) }}">
+                {{ sottoargomento.label }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if css_file %}
+<link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
+{% endif %}
+<script>
+    // Sidebar toggle functionality
+    const sidebar = document.getElementById('sidebar');
+    const openSidebarBtn = document.getElementById('open-sidebar');
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+
+    // Funzione per chiudere la sidebar
+    toggleSidebarBtn.addEventListener('click', function () {
+        sidebar.classList.add('collapsed');
+        openSidebarBtn.classList.remove('collapse');
+        toggleSidebarBtn.classList.add('collapse');
+        // openSidebarBtn.classList.remove('d-none');
+    });
+
+    // Funzione per aprire la sidebar
+    openSidebarBtn.addEventListener('click', function () {
+        sidebar.classList.remove('collapsed');
+        openSidebarBtn.classList.add('collapse');
+        toggleSidebarBtn.classList.remove('collapse');
+        // openSidebarBtn.classList.add('d-none');
+    });
+</script>{% endblock %}

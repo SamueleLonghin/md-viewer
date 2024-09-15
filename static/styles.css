@@ -1,0 +1,94 @@
+/* Stile per la sidebar */
+#sidebar {
+    position: absolute;
+    left: 0;
+    top: 56px;
+    bottom: 0;
+    width: 250px;
+    background-color: #f8f9fa;
+    z-index: 1000; /* La sidebar si sovrappone al contenuto */
+    transition: transform 0.3s ease;
+}
+
+#sidebar.collapsed {
+    transform: translateX(-250px); /* Nasconde la sidebar fuori dallo schermo */
+}
+
+#sidebar button#toggle-sidebar {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Pulsante per aprire la sidebar */
+#open-sidebar {
+    /*position: sticky;*/
+    /*left: 0;*/
+    /*top: 30px;*/
+    /*transform: translateY(-50%);*/
+    /*z-index: 1001;*/
+    /*transition: opacity 0.3s ease;*/
+}
+
+#open-sidebar.d-none {
+    opacity: 0;
+}
+
+/* Contenuto principale */
+#main-content {
+    padding-left: 20px; /* Aggiungi un po' di padding per evitare la sovrapposizione completa */
+}
+
+/* Elenco dei sottoargomenti */
+#sidebar ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+#sidebar ul li {
+    margin-bottom: 10px;
+}
+
+#sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+
+#sidebar ul li a:hover {
+    color: #007bff;
+}
+
+/* Tema scuro */
+[data-bs-theme="dark"] body {
+    background-color: #121212;
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .navbar {
+    background-color: #333;
+}
+
+[data-bs-theme="dark"] #sidebar {
+    background-color: #222;
+}
+
+[data-bs-theme="dark"] a,
+[data-bs-theme="dark"] #sidebar ul li a {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] a:hover {
+    color: #0d6efd;
+}
+
+[data-bs-theme="dark"] #toggle-sidebar,
+[data-bs-theme="dark"] #open-sidebar {
+    background-color: #444;
+    color: #f8f9fa;
+}
+
+.bi{
+    font-size: 21px;
+}

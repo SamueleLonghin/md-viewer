@@ -1,0 +1,12 @@
+{
+    "gestione_della_memoria": {
+        "label": "Gestione della Memoria in C++",
+        "folder": "gestione_della_memoria_cpp",
+        "sottoargomenti": [
+            {
+                "label": "Puntatori",
+                "folder": "puntatori"
+            }
+        ]
+    }
+}
