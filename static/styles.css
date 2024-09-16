@@ -89,6 +89,11 @@
     color: #f8f9fa;
 }
 
-.bi{
+.bi {
     font-size: 21px;
+}
+
+/*Per evitare che le immagini gestite male nei file md mandino tutto in casino*/
+img {
+    max-width: 100%;
 }
