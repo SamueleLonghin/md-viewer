@@ -1,24 +1,74 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Amministrazione</h1>
-<form method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="argomento" class="form-label">Argomento</label>
-        <input type="text" class="form-control" id="argomento" name="argomento" list="argomenti-list">
-        <datalist id="argomenti-list">
-            {% for argomento in argomenti %}
-            <option value="{{ argomento }}">
+    <h1>Amministrazione</h1>
+    <h2>Carica file</h2>
+    <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="argomento" class="form-label">Argomento</label>
+            <input type="text" class="form-control" id="argomento" name="argomento" list="argomenti-list" required>
+            <datalist id="argomenti-list">
+                {% for argomento in argomenti %}
+                    <option value="{{ argomento }}">
                 {% endfor %}
-        </datalist>
-    </div>
-    <div class="mb-3">
-        <label for="sottoargomento" class="form-label">Sottoargomento</label>
-        <input type="text" class="form-control" id="sottoargomento" name="sottoargomento" list="sottoargomenti-list">
-    </div>
-    <div class="mb-3">
-        <label for="file" class="form-label">Carica File (MD o ZIP)</label>
-        <input type="file" class="form-control" id="file" name="file" accept=".md,.zip">
-    </div>
-    <button type="submit" class="btn btn-primary">Carica</button>
-</form>
+            </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="sottoargomento" class="form-label">Sottoargomento</label>
+            <input type="text" class="form-control" id="sottoargomento" name="sottoargomento">
+        </div>
+        <div class="mb-3">
+            <label for="file" class="form-label">Carica File (MD o ZIP)</label>
+            <input type="file" class="form-control" id="file" name="file" accept=".md,.zip">
+        </div>
+        <button type="submit" class="btn btn-primary">Carica</button>
+    </form>
+
+    <!-- Elenco degli argomenti -->
+    <h2>Gestione argomenti</h2>
+    <ul>
+        {% for argomento, details in argomenti.items() %}
+            <li>
+                <strong>{{ details.label }}</strong>
+                <form method="POST" action="{{ url_for('rename_argomento') }}" class="d-inline-block">
+                    <input type="hidden" name="argomento" value="{{ argomento }}">
+                    <input type="text" name="nuovo_nome" placeholder="Nuovo nome" required>
+                    <button class="btn btn-primary btn-sm">Rinomina</button>
+                </form>
+                <form method="POST" action="{{ url_for('delete_argomento') }}" class="d-inline-block"
+                      onsubmit="return confirmDelete('argomento');">
+                    <input type="hidden" name="argomento" value="{{ argomento }}">
+                    <button class="btn btn-danger btn-sm">Rimuovi</button>
+                </form>
+
+                <!-- Elenco dei sottoargomenti -->
+                <ul>
+                    {% for sottoargomento in details.sottoargomenti %}
+                        <li>
+                            {{ sottoargomento.label }}
+                            <form method="POST" action="{{ url_for('rename_sottoargomento') }}" class="d-inline-block">
+                                <input type="hidden" name="argomento" value="{{ argomento }}">
+                                <input type="hidden" name="sottoargomento" value="{{ sottoargomento.folder }}">
+                                <input type="text" name="nuovo_nome" placeholder="Nuovo nome" required>
+                                <button class="btn btn-primary btn-sm">Rinomina</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('delete_sottoargomento') }}" class="d-inline-block"
+                                  onsubmit="return confirmDelete('sottoargomento');">
+                                <input type="hidden" name="argomento" value="{{ argomento }}">
+                                <input type="hidden" name="sottoargomento" value="{{ sottoargomento.folder }}">
+                                <button class="btn btn-danger btn-sm">Rimuovi</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        // Funzione per confermare la rimozione di un argomento o sottoargomento
+        function confirmDelete(type) {
+            return confirm("Sei sicuro di voler rimuovere questo " + type + "? Questa azione è irreversibile.");
+        }
+    </script>
+
 {% endblock %}
