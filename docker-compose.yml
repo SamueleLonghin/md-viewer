@@ -6,3 +6,6 @@ services:
       - "100:5000"
     volumes:
       - .:/app
+      - data:/data
+volumes:
+  data:

@@ -11,7 +11,8 @@ import shutil
 app = Flask(__name__)
 
 # Configurazione Flask e autenticazione base
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['DATA_FOLDER'] = os.getenv('DATA_FOLDER', 'data')
+app.config['UPLOAD_FOLDER'] = os.getenv('DATA_FOLDER', 'data') + '/uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'md', 'zip'}
 
 # Prendi le credenziali dal sistema di variabili d'ambiente
@@ -40,15 +41,15 @@ def allowed_media_file(filename):
 
 # Caricamento della lista degli argomenti
 def load_topics():
-    if not os.path.exists('data/argomenti.json'):
+    if not os.path.exists(app.config['DATA_FOLDER'] + '/argomenti.json'):
         return {}
-    with open('data/argomenti.json', 'r', encoding='utf-8') as f:
+    with open(app.config['DATA_FOLDER'] + '/argomenti.json', 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
 # Salvataggio della lista degli argomenti
 def save_topics(data):
-    with open('data/argomenti.json', 'w', encoding='utf-8') as f:
+    with open(app.config['DATA_FOLDER'] + '/argomenti.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
@@ -211,9 +212,9 @@ def admin():
 
 
 if __name__ == '__main__':
-    os.makedirs('uploads', exist_ok=True)
-    if not os.path.exists('data'):
-        os.makedirs('data')
-    if not os.path.exists('data/argomenti.json'):
+    if not os.path.exists(app.config['DATA_FOLDER']):
+        os.makedirs(app.config['DATA_FOLDER'])
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    if not os.path.exists(app.config['DATA_FOLDER'] + '/argomenti.json'):
         save_topics({})
     app.run(host='0.0.0.0', port=5000)
