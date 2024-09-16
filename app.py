@@ -147,7 +147,6 @@ def admin():
                     zip_ref.extractall(temp_extract_path)
 
                 # Sposta i file dalla cartella intermedia se necessario
-                extracted_items = os.listdir(temp_extract_path)
                 extracted_items = [f for f in os.listdir(temp_extract_path) if not f.startswith('__')]
 
                 if len(extracted_items) == 1 and os.path.isdir(os.path.join(temp_extract_path, extracted_items[0])):
